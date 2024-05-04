@@ -4,7 +4,12 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = string_utils.c ft_split.c check_command.c  free_split.c pipex_utils.c
+SRCS = \
+		string_utils.c \
+		ft_split.c \
+		free.c \
+		pipex_utils.c \
+		childs.c
 
 OBJS = ${SRCS:.c=.o}
 

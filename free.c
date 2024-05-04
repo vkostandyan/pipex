@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/03 17:23:26 by vkostand          #+#    #+#             */
-/*   Updated: 2024/05/03 17:24:07 by vkostand         ###   ########.fr       */
+/*   Created: 2024/05/02 21:07:09 by vkostand          #+#    #+#             */
+/*   Updated: 2024/05/04 17:36:34 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int main()
+void	free_split(char **str)
 {
-	char *args[3];
- 
-	args[0] = "ls";
-	args[1] = "-a";
-	args[2] = NULL;
-	execve("/bin/ls", args, NULL);
-	printf("This line will not be executed.\n");
- 
-	return (0);
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
+void free_for_child(t_pipex pipex)
+{
+	free_split(pipex.cmd_args);
+    free(pipex.cmd_path);
+}
+
+void free_for_parent(t_pipex pipex)
+{
+	close(pipex.infile);
+	close(pipex.outfile);
+	free_split(pipex.path_args);
 }
