@@ -2,14 +2,17 @@ NAME = pipex
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror 
 
-SRCS = \
-		string_utils.c \
-		ft_split.c \
+SRCS = 	cmd.c \
 		free.c \
-		pipex_utils.c \
-		childs.c
+		utils.c \
+		./libft/ft_join.c \
+		./libft/ft_split.c \
+		./libft/ft_strlen.c \
+		./libft/ft_strncmp.c \
+		./libft/ft_strlcpy.c \
+		./libft/ft_putstr_fd.c
 
 OBJS = ${SRCS:.c=.o}
 
@@ -19,7 +22,7 @@ ${NAME}: ${OBJS} pipex.h Makefile
 	@${CC} ${CFLAGS} main.c ${OBJS} -o ${NAME}
 
 clean:
-	rm -rf ${OBJS}
+	rm -rf ${OBJS} outfile
 
 fclean: clean
 	rm -rf ${NAME}
@@ -27,4 +30,3 @@ fclean: clean
 re: fclean ${NAME}
 
 .PHONY: all clean fclean re
-	

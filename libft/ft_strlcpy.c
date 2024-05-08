@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/08 15:29:09 by vkostand          #+#    #+#             */
-/*   Updated: 2024/05/08 18:14:46 by vkostand         ###   ########.fr       */
+/*   Created: 2024/02/02 11:27:15 by vkostand          #+#    #+#             */
+/*   Updated: 2024/02/02 11:49:51 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	free_split(char **str)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	while (*str)
+	size_t	i;
+	size_t	j;
+
+	j = ft_strlen(src);
+	if (dstsize == 0)
+		return (j);
+	i = 0;
+	while (i < dstsize - 1 && src[i] != '\0')
 	{
-		free(*str);
-		str++;
+		dst[i] = src[i];
+		i++;
 	}
-	free(str);
-}
-
-void	free_main(t_pipex pipex)
-{
-	printf("hastat stex\n");
-	free(pipex.paths);
-	free_split(pipex.path_args);
-}
-
-void	free_cmd(t_pipex pipex)
-{
-	free(pipex.cmd_path);
+	dst[i] = '\0';
+	return (j);
 }
