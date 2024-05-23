@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:18:35 by vkostand          #+#    #+#             */
-/*   Updated: 2024/05/08 18:13:46 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:42:56 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ char	*get_path(char **envp)
 {
 	while (ft_strncmp(*envp, "PATH", 4) != 0)
 		envp++;
-	return (*envp + 5);
+	if (envp)
+		return (*envp + 5);
+	return (NULL);
 }
 
 void	close_pipes(t_pipex pipex)
