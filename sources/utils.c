@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:18:35 by vkostand          #+#    #+#             */
-/*   Updated: 2024/05/23 17:42:56 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/06/25 19:34:50 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	send_error(char *str)
 {
 	ft_putstr_fd(str, 2);
+	system("leaks pipex");
 	exit(1);
 }
 

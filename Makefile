@@ -1,28 +1,43 @@
 NAME = pipex
-
-CC = cc
-
-CFLAGS = -Wall -Wextra -Werror
-
-SRCS = 	cmd.c \
+CFLAGS = -Wall -Wextra -Werror 
+CC = cc #-fsanitize=address
+SRCS =	main.c \
+		cmd.c \
 		free.c \
 		utils.c \
-		./libft/ft_join.c \
-		./libft/ft_split.c \
-		./libft/ft_strlen.c \
-		./libft/ft_strncmp.c \
-		./libft/ft_strlcpy.c \
-		./libft/ft_putstr_fd.c
+
+HEADER = 	pipex.h \
+			libft.h 
+
+LIBFT = ft_join.c \
+		ft_putstr_fd.c \
+		ft_split.c \
+		ft_strlcpy.c \
+		ft_strlen.c \
+		ft_strncmp.c
+
+SRCS_DIR = ./sources/
+HEADER_DIR = ./includes/
+LIBFT_DIR = ./libft/
+
+SRCS := $(addprefix $(SRCS_DIR), $(SRCS))
+HEADER := $(addprefix $(HEADER_DIR), $(HEADER)) 
+LIBFT := $(addprefix $(LIBFT_DIR), $(LIBFT))
+
+SRCS += $(LIBFT)
 
 OBJS = ${SRCS:.c=.o}
 
 all: ${NAME}
 
-${NAME}: ${OBJS} pipex.h Makefile
-	@${CC} ${CFLAGS} main.c -g3 -fsanitize=address ${OBJS} -o ${NAME}
+${NAME}: ${OBJS} Makefile 
+	@${CC} ${CFLAGS} -I$(HEADER_DIR) ${OBJS} ${MLX} -o ${NAME}
+
+.c.o:
+	$(CC) $(CFLAGS) -I$(HEADER_DIR) -c $< -o $(<:.c=.o)
 
 clean:
-	rm -rf ${OBJS} outfile
+	rm -rf ${OBJS}
 
 fclean: clean
 	rm -rf ${NAME}
@@ -30,3 +45,4 @@ fclean: clean
 re: fclean ${NAME}
 
 .PHONY: all clean fclean re
+
