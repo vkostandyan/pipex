@@ -10,11 +10,11 @@ HEADER = 	pipex.h \
 			libft.h 
 
 LIBFT = ft_join.c \
-		ft_putstr_fd.c \
 		ft_split.c \
-		ft_strlcpy.c \
 		ft_strlen.c \
-		ft_strncmp.c
+		ft_strlcpy.c \
+		ft_strncmp.c \
+		ft_putstr_fd.c 
 
 SRCS_DIR = ./sources/
 HEADER_DIR = ./includes/
@@ -45,4 +45,3 @@ fclean: clean
 re: fclean ${NAME}
 
 .PHONY: all clean fclean re
-

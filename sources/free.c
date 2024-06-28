@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:29:09 by vkostand          #+#    #+#             */
-/*   Updated: 2024/06/25 18:16:20 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/06/28 15:20:01 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,31 @@
 
 void	free_split(char **str)
 {
-	while (*str)
+	int	i;
+
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i])
 	{
-		free(*str);
-		str++;
+		free(str[i]);
+		str[i] = NULL;
+		i++;
 	}
+	free(str[i]);
+	str[i] = NULL;
 	free(str);
+	str = NULL;
 }
 
-void	free_main(t_pipex pipex)
+void	free_main(t_pipex *pipex)
 {
-	printf("hastat stex\n");
-	free(pipex.paths);
-	free_split(pipex.path_args);
-}
+	int	c1;
+	int	c2;
 
-void	free_cmd(t_pipex pipex)
-{
-	free_split(pipex.path_args);
-	free(pipex.cmd_path);
+	c1 = close(pipex->infile);
+	c2 = close(pipex->outfile);
+	if (c2 != 0 || c1 != 0)
+		send_error(CLOSE_ERR);
+	free_split(pipex->path_args);
 }

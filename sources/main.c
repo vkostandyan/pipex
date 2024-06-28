@@ -6,16 +6,11 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 14:59:46 by vkostand          #+#    #+#             */
-/*   Updated: 2024/06/25 19:50:04 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:52:45 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-// void __attribute__((destructor)) foo()
-// {
-// 	system("leaks pipex");
-// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -41,6 +36,11 @@ int	main(int argc, char **argv, char **envp)
 	close_pipes(pipex);
 	waitpid(pipex.pid1, NULL, 0);
 	waitpid(pipex.pid2, NULL, 0);
-	system("leaks pipex");
+	free_main(&pipex);
 	return (0);
 }
+
+// void __attribute__((destructor)) foo()
+// {
+// 	system("leaks pipex");
+// }

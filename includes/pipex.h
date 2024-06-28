@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 18:14:06 by vkostand          #+#    #+#             */
-/*   Updated: 2024/06/25 17:50:38 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:41:31 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,16 @@
 # include "libft.h"
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <errno.h>
 
-# define INFILE_OPEN_ERR "\033[1;31mCan't open infile\033[0m\n"
-# define OUTFILE_OPEN_ERR "\033[1;31mCan't open oufile\033[0m\n"
-# define ARG_ERR "\033[1;31mInvalid number of arguments\033[0m\n"
-# define FORK_ERR "\033[1;31mCan't fork\033[0m\n"
-# define CLOSE_ERR "\033[1;31mCan't close\033[0m\n"
-# define PIPE_ERR "\033[1;31mCan't create pipe\033[0m\n"
-# define DUP2_ERR "\033[1;31mCan't duplicate file descriptor\033[0m\n"
-# define CMD_ERR "\033[1;31mcommand not found\033[0m\n"
+# define INFILE_OPEN_ERR "Can't open infile\n"
+# define OUTFILE_OPEN_ERR "Can't open oufile\n"
+# define ARG_ERR "Invalid number of arguments\n"
+# define FORK_ERR "Can't fork\n"
+# define CLOSE_ERR "Can't close\n"
+# define PIPE_ERR "Can't create pipe\n"
+# define DUP2_ERR "Can't duplicate file descriptor\n"
+# define CMD_ERR "command not found\n"
 
 typedef struct s_pipex
 {
@@ -49,7 +50,7 @@ void		close_pipes(t_pipex pipex);
 
 // free
 void		free_split(char **str);
-void		free_main(t_pipex pipex);
+void		free_main(t_pipex *pipex);
 void		free_cmd(t_pipex pipex);
 
 // cmd

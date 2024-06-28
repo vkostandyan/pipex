@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:18:35 by vkostand          #+#    #+#             */
-/*   Updated: 2024/06/25 19:34:50 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/06/28 18:52:31 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	send_error(char *str)
 {
-	ft_putstr_fd(str, 2);
-	system("leaks pipex");
+	if (errno == 0)
+		ft_putstr_fd(str, 2);
+	else
+		perror(str);
 	exit(1);
 }
 
@@ -24,7 +26,7 @@ void	open_io(int argc, char **argv, t_pipex *pipex)
 	if (argc != 5)
 		send_error(ARG_ERR);
 	pipex->infile = open(argv[1], O_RDONLY);
-	pipex->outfile = open(argv[argc - 1], O_RDWR | O_TRUNC | O_CREAT, 0644);
+	pipex->outfile = open(argv[argc - 1], O_TRUNC | O_CREAT | O_RDWR, 0644);
 	if (pipex->infile == -1)
 		send_error(INFILE_OPEN_ERR);
 	if (pipex->outfile == -1)
@@ -33,9 +35,9 @@ void	open_io(int argc, char **argv, t_pipex *pipex)
 
 char	*get_path(char **envp)
 {
-	while (ft_strncmp(*envp, "PATH", 4) != 0)
+	while (*envp && ft_strncmp(*envp, "PATH", 4) != 0)
 		envp++;
-	if (envp)
+	if (*envp)
 		return (*envp + 5);
 	return (NULL);
 }

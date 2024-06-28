@@ -6,7 +6,7 @@
 /*   By: vkostand <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:45:30 by vkostand          #+#    #+#             */
-/*   Updated: 2024/06/25 19:50:25 by vkostand         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:06:20 by vkostand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@ char	*get_command_path(char **path_args, char *cmd)
 {
 	char	*command;
 
-	if (ft_strncmp(cmd, "./", 2) == 0)
-	{
-		if (access(cmd, F_OK) == 0)
-			return (cmd);
-		return (NULL);
-	}
 	while (*path_args)
 	{
 		command = ft_join(*path_args, cmd);
@@ -47,7 +41,7 @@ void	cmd1_child(t_pipex pipex, char **argv, char **envp)
 	pipex.cmd_path = get_command_path(pipex.path_args, pipex.cmd_args[0]);
 	if (!pipex.cmd_path)
 	{
-		free_cmd(pipex);
+		free(pipex.cmd_path);
 		send_error(CMD_ERR);
 	}
 	execve(pipex.cmd_path, pipex.cmd_args, envp);
@@ -67,7 +61,7 @@ void	cmd2_child(t_pipex pipex, char **argv, char **envp)
 	pipex.cmd_path = get_command_path(pipex.path_args, pipex.cmd_args[0]);
 	if (!pipex.cmd_path)
 	{
-		free_cmd(pipex);
+		free(pipex.cmd_path);
 		send_error(CMD_ERR);
 	}
 	execve(pipex.cmd_path, pipex.cmd_args, envp);
